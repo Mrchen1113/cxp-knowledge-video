@@ -1,0 +1,25 @@
+{
+  "source": "User-provided 职场沟通结论先行法则.mp4",
+  "sourceIsRequiredAtRuntime": false,
+  "use": "User-requested reusable visual and voice-style reference",
+  "frames": {
+    "reference-opening.png": 10,
+    "reference-contrast.png": 65,
+    "reference-steps.png": 140,
+    "reference-flow.png": 185,
+    "reference-applications.png": 230
+  },
+  "audio": {
+    "file": "voice-reference.wav",
+    "startSeconds": 134,
+    "durationSeconds": 20,
+    "referenceOnly": true
+  },
+  "referenceFrameCaptionsAndWatermarksMustNotBeReproduced": true,
+  "cleanExample": {
+    "file": "reference-clean-steps.png",
+    "source": "Built-in image_gen validation generation, 2026-09-12",
+    "containsNarrationCaptions": false
+  },
+  "voiceMatch": "stock style approximation; no identity clone"
+}

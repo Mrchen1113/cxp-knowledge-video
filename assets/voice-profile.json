@@ -1,0 +1,15 @@
+{
+  "mode": "stock-voice-style-approximation",
+  "provider": "Microsoft Edge online TTS via edge-tts",
+  "voice": "zh-CN-YunyangNeural",
+  "alternative": "zh-CN-YunxiNeural",
+  "rate": "+18%",
+  "pitch": "+0Hz",
+  "targetChineseCharactersPerMinute": [290, 330],
+  "referenceAudio": "voice-reference.wav",
+  "referencePitchMedianHzApprox": 148.1,
+  "matchStatus": "preset-approximation-not-perceptually-verified",
+  "testSpeechRateChineseCharactersPerMinute": 289.9,
+  "cloneVoice": false,
+  "uploadReferenceAudio": false
+}

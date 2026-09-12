@@ -1,0 +1,13 @@
+{
+  "note": "Create an isolated Python environment and verify imports. Runtime binaries and model weights are not included.",
+  "testedTtsPackage": "edge-tts==7.2.8",
+  "requiredForRender": [
+    "Pillow",
+    "ffmpeg",
+    "ffprobe"
+  ],
+  "optionalForRecordingTranscription": [
+    "faster-whisper",
+    "local small model"
+  ]
+}
