@@ -4,7 +4,7 @@
 
 一章一个主导构图，一张独立完整图。步骤用台阶/路径，对比用左右，循环用环路，因果用有向链，应用用并列分支。书本、齿轮不必每页都有。开场直接属于第一章，不追加无口播封面；结尾内容足够才独立成章。
 
-分镜记录 id、sourceRange、narration、goal、title、labels、layout、imagePrompt、image、start、end、强调关键词与目标。sourceRange 防止轻改变重写。章节完整衔接不漏句/重复配音，简述章数选择理由，不逐页等待批准。
+分镜记录 id、sourceRange、narration、goal、title、labels、layout、imagePrompt、image、start、end、换章语义依据。sourceRange 防止轻改变重写。章节完整衔接不漏句/重复配音，简述章数选择理由，不逐页等待批准。
 
 轻改允许：口语化连接词，拆长句，去重复铺垫，指定数字/缩写读法，补必要指代，明确段落目标。禁止添加夸大保证、虚构故事、未证实引文。保留原立场与语气，完整文案不强行换成痛点—反转—三步法。
 

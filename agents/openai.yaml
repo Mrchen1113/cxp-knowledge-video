@@ -1,4 +1,4 @@
 interface:
   display_name: "cxp-知识图解视频"
-  short_description: "文章或录音自动分章，原片风格知识图解、旁白与局部强调动画，输出无字幕视频"
+  short_description: "文章或录音自动分章，原片风格知识图解、旁白与短叠化转场，输出无字幕视频"
   default_prompt: "使用 $cxp-knowledge-video，把我提供的文章或录音制作成原片风格的知识图解视频，按内容分章，每章一图，不烧录字幕。"

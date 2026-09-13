@@ -1,11 +1,11 @@
-"""Render stable chapter illustrations with semantic outlines and crossfades."""
+"""Render stable chapter illustrations with crossfades and no emphasis overlays."""
 import argparse
 import hashlib
 import json
 import math
 from pathlib import Path
 import subprocess
-from PIL import Image, ImageDraw, ImageColor
+from PIL import Image
 
 
 def digest(path):
@@ -64,20 +64,8 @@ def load_plan(path):
                 raise ValueError('Image aspect differs from canvas; regenerate or extend it')
         chapter['_image'] = str(image)
         chapter['_hash'] = image_hash
-        cue_end = start
-        for cue in chapter.get('cues', []):
-            a, b = number(cue['start']), number(cue['end'])
-            if a < start or b > end or b - a < .25 or a < cue_end:
-                raise ValueError('Cues must be ordered, nonoverlapping, inside chapter')
-            cue_end = b
-            if len(cue['box']) != 4:
-                raise ValueError('box must be x,y,width,height')
-            x, y, bw, bh = map(number, cue['box'])
-            if min(x,y) < 0 or min(bw,bh) <= 0 or x+bw > w or y+bh > h:
-                raise ValueError('Cue box outside canvas')
-            if y < safe[1] and y+bh > safe[0]:
-                raise ValueError('Cue intersects future subtitle safe band')
-            ImageColor.getrgb(cue.get('color', '#DC9648'))
+        if chapter.get('cues', []):
+            raise ValueError('Dynamic emphasis is disabled; remove chapter cues before rendering')
     if abs(last - duration) > .1:
         raise ValueError(f'Chapter end {last} does not match audio duration {duration}')
     return plan, audio, duration, w, h, fps, transition
@@ -107,23 +95,8 @@ def render(path, output):
         args = ['ffmpeg','-hide_banner','-loglevel','error','-nostdin','-n','-filter_complex_threads','1',
                 '-loop','1','-framerate',str(fps),'-i',chapter['_image']]
         graph = [f'[0:v]scale={w}:{h}:force_original_aspect_ratio=decrease,pad={w}:{h}:(ow-iw)/2:(oh-ih)/2:color=0xF5E9D8,setsar=1,format=yuv420p[b0]']
-        for j, cue in enumerate(chapter.get('cues', []), 1):
-            overlay = Image.new('RGBA', (w,h), (0,0,0,0))
-            draw = ImageDraw.Draw(overlay)
-            x,y,bw,bh = cue['box']
-            draw.rounded_rectangle((x,y,x+bw-1,y+bh-1), radius=max(4,round(w*.02)), outline=ImageColor.getrgb(cue.get('color','#DC9648'))+(235,), width=max(3,round(w*.006)))
-            png = work / f'chapter-{index:03d}-cue-{j:03d}.png'
-            overlay.save(png)
-            args.extend(['-loop','1','-framerate',str(fps),'-i',str(png)])
-            a = cue['start'] - chapter['start'] + lead
-            b = cue['end'] - chapter['start'] + lead
-            fade = min(.2,(b-a)/3)
-            outfade = min(.25,(b-a)/3)
-            graph.append(f'[{j}:v]format=rgba,fade=t=in:st={a:.6f}:d={fade:.6f}:alpha=1,fade=t=out:st={b-outfade:.6f}:d={outfade:.6f}:alpha=1[o{j}]')
-            graph.append(f'[b{j-1}][o{j}]overlay=0:0:format=auto[b{j}]')
         clip = work / f'chapter-{index:03d}.mp4'
-        last = len(chapter.get('cues', []))
-        args.extend(['-filter_complex',';'.join(graph),'-map',f'[b{last}]','-an','-t',f'{length:.6f}',
+        args.extend(['-filter_complex',';'.join(graph),'-map','[b0]','-an','-t',f'{length:.6f}',
                      '-r',str(fps),'-c:v','libx264','-threads','2','-preset','veryfast','-crf','18','-pix_fmt','yuv420p',str(clip)])
         run(args)
         clips.append(clip)

@@ -50,8 +50,6 @@ def verify(plan_path, video, output):
         times.add((chapter['start']+chapter['end'])/2)
         if chapter['start']:
             times.update([max(0,chapter['start']-transition),chapter['start'],chapter['start']+transition])
-        for cue in chapter.get('cues',[]):
-            times.update([max(chapter['start'],cue['start']-.1),(cue['start']+cue['end'])/2,min(expected-.05,cue['end']+.1)])
     screenshots=[]
     for i,t in enumerate(sorted(times)):
         dest=frames/f'{i:03d}-{t:.3f}s.jpg'
